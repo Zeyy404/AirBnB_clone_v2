@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+OB#!/usr/bin/python3
 """ Console Module """
 import cmd
 import sys
@@ -149,7 +149,6 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[class_name](**class_attributes)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
