@@ -123,7 +123,9 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         class_name = args[0]
 
-        if class_name not in HBNBCommand.classes:
+        storage_instance = storage.FileStorage()
+
+        if class_name not in storage_instance.classes:
             print("** class doesn't exist **")
             return
 
@@ -147,11 +149,11 @@ class HBNBCommand(cmd.Cmd):
 
                 class_attributes[key] = value
 
-        new_instance = HBNBCommand.classes[class_name](**class_attributes)
+        new_instance = storage_instance.classes[class_name](**class_attributes)
 
         storage_type = os.getenv('HBNB_TYPE_STORAGE', 'file')
         if storage_type == 'file':
-            storage.save()
+            storage_instance.save()
 
         print(new_instance.id)
 
