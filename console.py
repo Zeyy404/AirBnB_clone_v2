@@ -149,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
 
                 class_attributes[key] = value
 
-        new_instance = storage_instance.classes[class_name](**class_attributes)
+        new_instance = storage_instance.classes[class_name]()
 
         storage_type = os.getenv('HBNB_TYPE_STORAGE', 'file')
         if storage_type == 'file':
