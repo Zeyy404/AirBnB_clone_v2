@@ -159,11 +159,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-            if not hasattr(obj_kwargs, 'id'):
+            if 'id' not in obj_kwargs:
                 obj_kwargs['id'] = str(uuid.uuid4())
-            if not hasattr(obj_kwargs, 'created_at'):
+            if 'created_at' not in obj_kwargs:
                 obj_kwargs['created_at'] = str(datetime.now())
-            if not hasattr(obj_kwargs, 'updated_at'):
+            if 'updated_at' not in obj_kwargs:
                 obj_kwargs['updated_at'] = str(datetime.now())
             new_instance = HBNBCommand.classes[class_name](**obj_kwargs)
             new_instance.save()
