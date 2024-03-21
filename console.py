@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import os
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -148,7 +149,8 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance = HBNBCommand.classes[class_name](**class_attributes)
 
-        if storage.__class__.__name__ == 'FileStorage':
+        storage_type = os.getenv('HBNB_TYPE_STORAGE', 'file')
+        if storage_type == 'file':
             storage.save()
 
         print(new_instance.id)
