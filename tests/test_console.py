@@ -10,6 +10,8 @@ from models import storage
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
+from tests import clear_stream
+from tests import clear_stream
 from console import HBNBCommand
 from io import StringIO
 from unittest.mock import patch
