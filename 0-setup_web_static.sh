@@ -22,10 +22,6 @@ echo "<html>
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 sudo sed -i '/hbnb_static/ d' /etc/nginx/sites-available/default
-sudo sed -i 's/^\tlocation \/ {$/\
-\tlocation \/hbnb_static\/ {\
-\t\talias \/data\/web_static\/current\/;\
-\t}\
-\n\n\tlocation \/\ {$/' /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 
 sudo service nginx restart
