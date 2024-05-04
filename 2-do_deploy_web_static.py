@@ -10,6 +10,7 @@ env.hosts = ['54.234.80.45', '54.84.193.100']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
 
+
 def do_deploy(archive_path):
     """Deploy web files to server"""
     try:
@@ -47,7 +48,7 @@ web_static_{}/web_static'
         # re-establish symbolic link
         run('sudo ln -s /data/web_static/releases/\
 web_static_{}/ /data/web_static/current'.format(timestamp))
-    except:
+    except Exception:
         return False
 
     # return True on success
