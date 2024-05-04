@@ -7,40 +7,24 @@ from os import path
 
 
 env.hosts = ['54.234.80.45', '54.84.193.100']
-env.user = 'ubuntu'
-env.key_filename = '~/.ssh/school'
 
 
 def do_deploy(archive_path):
-    """Deploy web files to server"""
-    try:
-        if not (path.exists(archive_path)):
-            return False
-
-        put(archive_path, '/tmp/')
-
-        timestamp = archive_path[-18:-4]
-        run('sudo mkdir -p /data/web_static/\
-releases/web_static_{}/'.format(timestamp))
-
-        run('sudo tar -xzf /tmp/web_static_{}.tgz -C \
-/data/web_static/releases/web_static_{}/'
-            .format(timestamp, timestamp))
-
-        run('sudo rm /tmp/web_static_{}.tgz'.format(timestamp))
-
-        run('sudo mv /data/web_static/releases/web_static_{}/web_static/* \
-/data/web_static/releases/web_static_{}/'.format(timestamp, timestamp))
-
-        run('sudo rm -rf /data/web_static/releases/\
-web_static_{}/web_static'
-            .format(timestamp))
-
-        run('sudo rm -rf /data/web_static/current')
-
-        run('sudo ln -s /data/web_static/releases/\
-web_static_{}/ /data/web_static/current'.format(timestamp))
-    except Exception:
+    """distributes an archive to the web servers"""
+    if exists(archive_path) is False:
         return False
-
-    return True
+    try:
+        folder = archive_path.split("/")[-1]
+        file_name = folder.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, file_name))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(folder, path, file_name))
+        run('rm /tmp/{}'.format(folder))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, file_name))
+        run('rm -rf {}{}/web_static'.format(path, file_name))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, file_name))
+        return True
+    except:
+        return False
